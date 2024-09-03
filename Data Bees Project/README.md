@@ -1,4 +1,4 @@
-**Crimson Global Academy Enrollment Analysis Project**
+# Crimson Global Academy Enrollment Analysis Project
 Project Overview
 This project is focused on identifying optimal advertising targets for Crimson Global Academy by analyzing key demographic and enrollment data from 2020 to the present. By leveraging detailed insights into student populations and socio-economic statuses, the analysis highlights potential student groups that might be most responsive to the academy’s unique educational offerings.
 
