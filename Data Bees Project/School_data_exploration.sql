@@ -166,10 +166,4 @@ where Top_SEA_Quarter is not null
 order by Top_SEA_Quarter desc
 
 
-select Calendar_Year, Suburb, school_name, sum(Total_Enrolments) as Total_Enrolments
-from School
-where Calendar_Year >= '2020' 
-and Total_Enrolments is not null		-- Exclude schools with no enrollment data
-group by Calendar_Year, Suburb, school_name
-
 
