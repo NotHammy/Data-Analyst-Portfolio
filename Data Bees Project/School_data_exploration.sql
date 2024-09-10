@@ -204,6 +204,7 @@ order by weighted_score desc;
 
 
 
+
 -- Above we found the best rural and regional suburbs for advertisement.
 -- Query below finds the best rural and regional schools instead.
 
@@ -250,8 +251,9 @@ order by weighted_score desc;
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 
--- Special needs schools with high ICSEA percentiles and high enrollment counts
 
+
+-- Special needs schools with high ICSEA percentiles and high enrollment counts
 
 ;with EnrolmentData as (
 	select Calendar_Year, Suburb, School_Name, ICSEA_Percentile,  sum(Total_Enrolments) as Total_Enrolments, School_Type
@@ -294,11 +296,239 @@ order by weighted_score desc;
 
 
 
+-- Gather location data for all schools that we have recommended. 
+-- Add Location data into current database as a seperate table. This table includes the 
+-- longitude and latitude of all schools and suburbs. 
+-- Join schools table on locations table
+
+
+
+
+-- Top choices for Rural Suburbs with their latlongs
+
+;with EnrolmentData as (
+	select Calendar_Year, Suburb, ICSEA_Percentile,  sum(Total_Enrolments) as Total_Enrolments
+	from School
+	where Calendar_Year >= '2020' 
+	and Geolocation in ('Outer Regional', 'Remote', 'Very Remote')
+	and Total_Enrolments is not null		-- Exclude suburbs with no enrollment data
+	and Total_Enrolments > 100
+	group by Calendar_Year, Suburb, ICSEA_Percentile
+),
+-- Normalise the data
+NormalisedData as (
+	select Suburb, avg(ICSEA_Percentile) as avg_ICSEA_percentile, avg(Total_Enrolments) as avg_total_enrolments,
+		max(avg(ICSEA_Percentile)) over () as max_ICSEA_percentile,
+		min(avg(ICSEA_Percentile)) over () as min_ICSEA_percentile,
+		max(avg(Total_Enrolments)) over () as max_total_enrolments,
+		min(avg(Total_Enrolments)) over () as min_total_enrolments
+	from EnrolmentData
+	group by Suburb
+),
+-- list of suburbs based on weighted score
+-- NOTE: See formula in Methodology section in Report
+TopChoices as (
+	select Suburb, avg_ICSEA_percentile, avg_total_enrolments, 
+		  round(
+			(
+				(
+					(cast(avg_ICSEA_percentile as float) - cast(min_ICSEA_percentile as float)) / 
+					(cast(max_ICSEA_percentile as float) - cast(min_ICSEA_percentile as float))*0.67
+				) + 
+				(
+					(cast(avg_total_enrolments as float) - cast(min_total_enrolments as float)) / 
+					(cast(max_total_enrolments as float) - cast(min_total_enrolments as float))*0.33
+				)
+			),
+			3
+		) as weighted_score
+	from NormalisedData
+)
+select top 10 s.Suburb, s.avg_ICSEA_percentile, s.avg_total_enrolments, s.weighted_score, max(l.latitude) as lat, max(l.longitude) as long
+from TopChoices s
+Join Locations l on s.Suburb = l.Suburb
+group by s.Suburb, s.avg_ICSEA_percentile, s.avg_total_enrolments, s.weighted_score
+order by s.weighted_score desc;
 
 
 
 
 
 
+
+-- Top choices for special needs schools with their latlong values
+
+;with EnrolmentData as (
+    select Calendar_Year, Suburb, School_Name, ICSEA_Percentile, sum(Total_Enrolments) as Total_Enrolments, School_Type
+    from School
+    where Calendar_Year >= '2020' 
+    and Total_Enrolments is not null        -- Exclude suburbs with no enrollment data
+    and School_Type = 'Special'
+    group by Calendar_Year, School_Name, Suburb, ICSEA_Percentile, School_Type
+),
+-- Normalise the data
+NormalisedData as (
+    select School_Name, Suburb, avg(ICSEA_Percentile) as avg_ICSEA_percentile, avg(Total_Enrolments) as avg_total_enrolments, School_Type,
+        max(avg(ICSEA_Percentile)) over () as max_ICSEA_percentile,
+        min(avg(ICSEA_Percentile)) over () as min_ICSEA_percentile,
+        max(avg(Total_Enrolments)) over () as max_total_enrolments,
+        min(avg(Total_Enrolments)) over () as min_total_enrolments
+    from EnrolmentData
+    group by School_Name, Suburb, School_Type
+), 
+TopChoices as (
+    select School_Name, Suburb, School_Type, avg_ICSEA_percentile, avg_total_enrolments,
+          round(
+            (
+                (
+                    (cast(avg_ICSEA_percentile as float) - cast(min_ICSEA_percentile as float)) / 
+                    (cast(max_ICSEA_percentile as float) - cast(min_ICSEA_percentile as float)) * 0.67
+                ) + 
+                (
+                    (cast(avg_total_enrolments as float) - cast(min_total_enrolments as float)) / 
+                    (cast(max_total_enrolments as float) - cast(min_total_enrolments as float)) * 0.33
+                )
+            ),
+            3
+        ) as weighted_score
+    from NormalisedData
+)
+select s.School_Name, s.Suburb, s.School_Type, s.avg_ICSEA_percentile, s.avg_total_enrolments, s.weighted_score, l.latitude as lat, l.longitude as long
+from TopChoices s
+Join Locations l on s.School_Name = l.School_Name
+order by s.weighted_score desc;
+
+
+
+
+-- Top Choices for Rural Schools with their LatLongs
+
+;with EnrolmentData as (
+	select Calendar_Year, Suburb, School_Name, ICSEA_Percentile,  sum(Total_Enrolments) as Total_Enrolments
+	from School
+	where Calendar_Year >= '2020' 
+	and Geolocation in ('Outer Regional', 'Remote', 'Very Remote')
+	and Total_Enrolments is not null		-- Exclude suburbs with no enrollment data
+	group by Calendar_Year, School_Name, Suburb,  ICSEA_Percentile
+),
+-- Normalise the data
+NormalisedData as (
+	select School_Name, Suburb, avg(ICSEA_Percentile) as avg_ICSEA_percentile, avg(Total_Enrolments) as avg_total_enrolments,
+		max(avg(ICSEA_Percentile)) over () as max_ICSEA_percentile,
+		min(avg(ICSEA_Percentile)) over () as min_ICSEA_percentile,
+		max(avg(Total_Enrolments)) over () as max_total_enrolments,
+		min(avg(Total_Enrolments)) over () as min_total_enrolments
+	from EnrolmentData
+	group by School_Name, Suburb
+),
+TopChoices as (
+	select top 10 School_Name, Suburb, avg_ICSEA_percentile, avg_total_enrolments, 
+		  round(
+			(
+				(
+					(cast(avg_ICSEA_percentile as float) - cast(min_ICSEA_percentile as float)) / 
+					(cast(max_ICSEA_percentile as float) - cast(min_ICSEA_percentile as float))*0.67
+				) + 
+				(
+					(cast(avg_total_enrolments as float) - cast(min_total_enrolments as float)) / 
+					(cast(max_total_enrolments as float) - cast(min_total_enrolments as float))*0.33
+				)
+			),
+			3
+		) as weighted_score
+	from NormalisedData
+	order by weighted_score desc
+)
+select s.School_Name, s.avg_ICSEA_percentile, s.avg_total_enrolments, s.weighted_score, l.latitude as lat, l.longitude as long
+from TopChoices s
+Join Locations l on s.School_Name = l.School_Name
+order by s.weighted_score desc;
+
+
+
+--|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+
+-- Combined data from last 2 data sets to show overall ranking for schools based on weighted score. 
+
+;with EnrolmentDataSpecial as (
+    select Calendar_Year, Suburb, School_Name, ICSEA_Percentile, sum(Total_Enrolments) as Total_Enrolments, School_Type
+    from School
+    where Calendar_Year >= '2020' 
+    and Total_Enrolments is not null
+    and School_Type = 'Special'
+    group by Calendar_Year, School_Name, Suburb, ICSEA_Percentile, School_Type
+),
+NormalisedDataSpecial as (
+    select School_Name, Suburb, avg(ICSEA_Percentile) as avg_ICSEA_percentile, avg(Total_Enrolments) as avg_total_enrolments, School_Type,
+        max(avg(ICSEA_Percentile)) over () as max_ICSEA_percentile,
+        min(avg(ICSEA_Percentile)) over () as min_ICSEA_percentile,
+        max(avg(Total_Enrolments)) over () as max_total_enrolments,
+        min(avg(Total_Enrolments)) over () as min_total_enrolments
+    from EnrolmentDataSpecial
+    group by School_Name, Suburb, School_Type
+),
+TopChoicesSpecial as (
+    select School_Name, Suburb, School_Type, avg_ICSEA_percentile, avg_total_enrolments,
+          round(
+            (
+                (
+                    (cast(avg_ICSEA_percentile as float) - cast(min_ICSEA_percentile as float)) / 
+                    (cast(max_ICSEA_percentile as float) - cast(min_ICSEA_percentile as float)) * 0.67
+                ) + 
+                (
+                    (cast(avg_total_enrolments as float) - cast(min_total_enrolments as float)) / 
+                    (cast(max_total_enrolments as float) - cast(min_total_enrolments as float)) * 0.33
+                )
+            ),
+            3
+        ) as weighted_score
+    from NormalisedDataSpecial
+),
+EnrolmentDataRural as (
+    select Calendar_Year, Suburb, School_Name, ICSEA_Percentile, sum(Total_Enrolments) as Total_Enrolments
+    from School
+    where Calendar_Year >= '2020' 
+    and Geolocation in ('Outer Regional', 'Remote', 'Very Remote')
+    and Total_Enrolments is not null
+    group by Calendar_Year, School_Name, Suburb, ICSEA_Percentile
+),
+NormalisedDataRural as (
+    select School_Name, Suburb, avg(ICSEA_Percentile) as avg_ICSEA_percentile, avg(Total_Enrolments) as avg_total_enrolments,
+        max(avg(ICSEA_Percentile)) over () as max_ICSEA_percentile,
+        min(avg(ICSEA_Percentile)) over () as min_ICSEA_percentile,
+        max(avg(Total_Enrolments)) over () as max_total_enrolments,
+        min(avg(Total_Enrolments)) over () as min_total_enrolments
+    from EnrolmentDataRural
+    group by School_Name, Suburb
+),
+TopChoicesRural as (
+    select School_Name, Suburb, 'Rural' as School_Type, avg_ICSEA_percentile, avg_total_enrolments,
+          round(
+            (
+                (
+                    (cast(avg_ICSEA_percentile as float) - cast(min_ICSEA_percentile as float)) / 
+                    (cast(max_ICSEA_percentile as float) - cast(min_ICSEA_percentile as float)) * 0.67
+                ) + 
+                (
+                    (cast(avg_total_enrolments as float) - cast(min_total_enrolments as float)) / 
+                    (cast(max_total_enrolments as float) - cast(min_total_enrolments as float)) * 0.33
+                )
+            ),
+            3
+        ) as weighted_score
+    from NormalisedDataRural
+),
+CombinedResults as (
+    select * from TopChoicesSpecial
+    union all
+    select * from TopChoicesRural
+)
+select s.School_Name, s.Suburb, s.School_Type, s.avg_ICSEA_percentile, s.avg_total_enrolments, s.weighted_score, l.latitude as lat, l.longitude as long
+from CombinedResults s
+join Locations l on s.School_Name = l.School_Name
+group by s.School_Name, s.Suburb, s.School_Type, s.avg_ICSEA_percentile, s.avg_total_enrolments, s.weighted_score, l.latitude, l.longitude
+order by s.weighted_score desc;
+ 
 
 
