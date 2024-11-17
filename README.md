@@ -17,7 +17,7 @@ This portfolio includes various projects that I have worked on during my career 
 - **Data Bees Project**: A consulting project where I developed data-driven advertising strategies to optimize campaign performance across regions.
 - **F1 Simulator Data**: Collaborative work with Oracle and Red Bull Racing to optimize F1 car dynamics using advanced data analysis.
 - **NYC Parking Violations**: An exploration of public data to analyze patterns and trends in parking violations over a fiscal year.
-- **Classifying Breast Cancer Mammograms**: Led a team in a machine learning competition to classify breast cancer types from mammographic images.
+
 
 ## Skills and Technologies
 - **Languages**: Proficient in Python and SQL, essential for complex data manipulation and analysis.
