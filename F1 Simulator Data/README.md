@@ -159,13 +159,6 @@ Once relationships between features are understood, several optimisation techniq
 ### Data-Driven Simulations:
 Engineers can run simulations using this dataset to test the effectiveness of their racing strategies.
 
-## Support Information:
-- For questions and/or support related to the created features, reach out to any of the contacts listed in the Contributors section.
-- For questions relating to the original raw data provided by Oracle, contact:
-
-**Name**: David Warton (Supervisor)  
-**Email**: david.warton@unsw.edu.au  
-
 ## Contributors:
 | **Name**        | **Email**                |
 |-----------------|--------------------------|
