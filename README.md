@@ -14,10 +14,9 @@ This portfolio includes various projects that I have worked on during my career 
 
 ### Featured Projects
 - **Cyber Security Project**: An analysis aimed at enhancing cybersecurity measures by classifying internet devices and assessing vulnerabilities.
-- **Data Bees Project**: A consulting project where I developed data-driven advertising strategies to optimize campaign performance across regions.
+- **Targeted Advertising Strategies for Educational Institutes**: A project focused on developing data-driven advertising strategies to optimize campaign performance across educational sectors.
 - **F1 Simulator Data**: Collaborative work with Oracle and Red Bull Racing to optimize F1 car dynamics using advanced data analysis.
 - **NYC Parking Violations**: An exploration of public data to analyze patterns and trends in parking violations over a fiscal year.
-
 
 ## Skills and Technologies
 - **Languages**: Proficient in Python and SQL, essential for complex data manipulation and analysis.
