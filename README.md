@@ -14,9 +14,16 @@ This portfolio includes various projects that I have worked on during my career 
 
 ### Featured Projects
 - **Cyber Security Project**: An analysis aimed at enhancing cybersecurity measures by classifying internet devices and assessing vulnerabilities.
+  - **Skills Used**: Python, including libraries like Pandas for data manipulation, Matplotlib and Seaborn for data visualization, and Scikit-Learn for machine learning.
+  
 - **Targeted Advertising Strategies for Educational Institutes**: A project focused on developing data-driven advertising strategies to optimize campaign performance across educational sectors.
+  - **Skills Used**: SQL for data querying, Excel for data manipulation and analysis, Power BI for creating dynamic dashboards and visualizations.
+
 - **F1 Simulator Data**: Collaborative work with Oracle and Red Bull Racing to optimize F1 car dynamics using advanced data analysis.
+  - **Skills Used**: Python, utilizing libraries such as NumPy for numerical data manipulation, Pandas for data structuring, and Matplotlib and Seaborn for data visualization.
+
 - **NYC Parking Violations**: An exploration of public data to analyze patterns and trends in parking violations over a fiscal year.
+  - **Skills Used**: Python, with extensive use of Pandas for data handling, and Matplotlib and Seaborn for creating visual representations of data insights.
 
 ## Skills and Technologies
 - **Languages**: Proficient in Python and SQL, essential for complex data manipulation and analysis.
