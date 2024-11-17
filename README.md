@@ -1,4 +1,4 @@
-# Hamza Jalal - **Data Analyst Portfolio**
+# Hamza Jalal - Data Analyst Portfolio
 
 Welcome to my Data Analyst Portfolio on GitHub! Here, you'll find a collection of projects that showcase my skills and experiences in data science and analytics. Each project in this portfolio represents a step towards my goal of leveraging data to make impactful decisions and drive innovation.
 
@@ -20,11 +20,11 @@ This portfolio includes various projects that I have worked on during my career 
 - **Classifying Breast Cancer Mammograms**: Led a team in a machine learning competition to classify breast cancer types from mammographic images.
 
 ## Skills and Technologies
-- **Languages**: Proficient in Python and SQL
-- **Visualization Tools**: Power BI, Tableau
-- **Data Analysis**: Machine Learning, Predictive Modeling, Data Manipulation
-- **Data Engineering**: Experience with PySpark, Hadoop
-- **Soft Skills**: Strong leadership, teamwork, and communication abilities
+- **Languages**: Proficient in Python and SQL, essential for complex data manipulation and analysis.
+- **Visualization Tools**: Skilled in using Power BI, Tableau, and Excel to create impactful visualizations and dashboards that convey clear and actionable insights.
+- **Data Analysis**: Machine Learning, Predictive Modeling, Data Manipulation, applying rigorous statistical methods to solve problems and derive insights.
+- **Data Engineering**: Experience with PySpark, Hadoop for handling large datasets and performing distributed computing.
+- **Soft Skills**: Strong leadership, teamwork, and communication abilities, ensuring effective collaboration and project success.
 
 ## Goals
 My portfolio aims to not only display my technical skills but also to illustrate my ability to translate complex data into actionable insights. I am eager to engage with more projects and opportunities that drive forward the boundaries of what data can achieve in practical, real-world applications.
