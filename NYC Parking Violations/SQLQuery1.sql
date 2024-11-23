@@ -19,7 +19,7 @@ CREATE TABLE dbo.nyc (
 DECLARE @i INT = 1;
 DECLARE @sql NVARCHAR(MAX);
 
-WHILE @i <= 14  -- Adjust the number as per the number of part tables you have
+WHILE @i <= 14  -- Adjust based on number of data tables (data files)
 BEGIN
     SET @sql = 'INSERT INTO dbo.nyc (Registration_State, Violation_Description, Vehicle_Body_Type, Issue_Date, Summons_Number, Plate_Type, Vehicle_Body_Type2, Vehicle_Make, Vehicle_Color, Street_Code1, Vehicle_Year)
                 SELECT Registration_State, Violation_Description, Vehicle_Body_Type, Issue_Date, Summons_Number, Plate_Type, Vehicle_Body_Type2, Vehicle_Make, Vehicle_Color, Street_Code1, Vehicle_Year
