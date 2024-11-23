@@ -46,3 +46,6 @@ SELECT State, Violation, Count
 FROM RankedViolations
 WHERE Rank = 1
 ORDER BY COUNT DESC;
+
+
+-- testing if changed made on mssms sync with github
