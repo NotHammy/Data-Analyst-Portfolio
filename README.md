@@ -23,7 +23,7 @@ This portfolio includes various projects that I have worked on during my career 
   - **Skills Used**: Python, utilizing libraries such as NumPy for numerical data manipulation, Pandas for data structuring, and Matplotlib and Seaborn for data visualization.
 
 - **NYC Parking Violations**: An exploration of public data to analyze patterns and trends in parking violations over a fiscal year.
-  - **Skills Used**: Python, with extensive use of Pandas for data handling, and Matplotlib and Seaborn for creating visual representations of data insights.
+  - **Skills Used**: Python for data cleaning and extraction, SQL for data querying and Power BI for creating dashboard visualisations.
 
 ## Skills and Technologies
 - **Languages**: Proficient in Python and SQL, essential for complex data manipulation and analysis.
