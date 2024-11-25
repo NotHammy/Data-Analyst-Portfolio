@@ -78,4 +78,4 @@ CROSS JOIN (
 	SELECT COUNT(Violation_Description) AS TotalViolations
     FROM nyc
 ) AS Total
-ORDER BY Count DESC;
+ORDER BY Count DESC; 
