@@ -5,7 +5,7 @@ This project aims to identify optimal advertising targets for Crimson Global Aca
 
 ## Objectives
 - **Identify Target Demographics:** Pinpoint specific groups of students—such as academically ambitious students, athletes, performers, and families who often travel—who are ideal candidates for the academy's programs.
-- **Analyze Enrollment Trends:** Investigate changes in school enrollments over recent years to discern demographic shifts and pinpoint emerging opportunities for enrollment growth.
+- **Analyse Enrollment Trends:** Investigate changes in school enrollments over recent years to discern demographic shifts and pinpoint emerging opportunities for enrollment growth.
 - **Optimize Advertising Strategies:** Use the derived insights to craft and refine advertising strategies that are precisely tailored to engage specific student groups and geographic areas demonstrating the highest potential for new enrollments.
 
 ## Data Handling and Analysis
