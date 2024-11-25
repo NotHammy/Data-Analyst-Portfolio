@@ -1,7 +1,7 @@
 # Online Educational Institute Advertising Locations
 
 ## Project Overview
-This project aims to identify optimal advertising targets for Crimson Global Academy by analyzing demographic and enrollment data from 2020 to the present. With a focus on leveraging deep insights into student populations and socio-economic statuses, our analysis pinpoints potential student groups that might be most responsive to the academy's unique educational offerings.
+This project aims to identify optimal advertising targets for Crimson Global Academy by analysing demographic and enrollment data from 2020 to the present. With a focus on leveraging deep insights into student populations and socio-economic statuses, this analysis pinpoints potential student groups that might be most responsive to the academy's unique educational offerings.
 
 ## Objectives
 - **Identify Target Demographics:** Pinpoint specific groups of students—such as academically ambitious students, athletes, performers, and families who often travel—who are ideal candidates for the academy's programs.
