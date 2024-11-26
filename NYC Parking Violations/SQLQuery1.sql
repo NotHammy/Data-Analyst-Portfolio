@@ -1,3 +1,20 @@
+/*******************************************************************************************************
+* Author: Hamza Jalal                                                                                  *
+* Date: Nov 2024                                                                                       *
+* Description: This SQL script analyses the NYC Parking Violations dataset, which records violations   *
+*              issued from July 1, 2021, to June 30, 2022. The script focuses on identifying trends    *
+*              and patterns in parking violations across different times, locations, and other         *
+*              dimensions provided in the dataset. It aims to extract actionable insights that could   *
+*              inform urban planning and traffic enforcement strategies.							   *
+*																									   *
+* Purpose: To leverage the Parking Violations data to enhance understanding of parking behaviour in    *
+*          NYC, facilitate urban planning, improve traffic management, and optimise law enforcement    *
+*          resource allocation. This analysis also supports policy-making by providing empirical       *
+*          evidence on the effectiveness of current parking regulations and identifying areas where    *
+*          improvements are needed.                                                                    *
+*******************************************************************************************************/
+
+
 USE [Parking Violations];
 
 -- Create a new table to store combined data
@@ -30,11 +47,15 @@ BEGIN
 END;
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+
 SELECT TOP 100 * FROM nyc;
 
 
+------------------------------------------------------------------------ Exploratory Data Analysis -----------------------------------------------------------------------------------------------------------------------------|
 
------------------------------------------------------------------------- Exploratory Data Analysis ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 -- Which parking violation was most commonly committed by vehicles in NYC that were registered in various states?
 -- Include percentage distribution of violations.
@@ -58,7 +79,7 @@ ORDER BY Percentage DESC;
 
 
 
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 
 -- Total number of violations committed in NYC in the current Fiscal Year
@@ -79,3 +100,44 @@ CROSS JOIN (
     FROM nyc
 ) AS Total
 ORDER BY Count DESC; 
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+
+
+-- How do parking violations vary across days of the week?
+-- Assign day name to date
+
+-- Select the day of the week and count violations
+SELECT 
+    -- Translate numeric day of the week to its name
+    CASE
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 1 THEN 'Sunday'
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 2 THEN 'Monday'
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 3 THEN 'Tuesday'
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 4 THEN 'Wednesday'
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 5 THEN 'Thursday'
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 6 THEN 'Friday'
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 7 THEN 'Saturday'
+    END AS issue_weekday,
+    COUNT(Summons_Number) AS Violation_Count  -- Count of violations per weekday
+FROM 
+    nyc
+GROUP BY 
+    -- Group results by the weekday name for aggregation
+    CASE
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 1 THEN 'Sunday'
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 2 THEN 'Monday'
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 3 THEN 'Tuesday'
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 4 THEN 'Wednesday'
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 5 THEN 'Thursday'
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 6 THEN 'Friday'
+        WHEN DATEPART(WEEKDAY, Issue_Date) = 7 THEN 'Saturday'
+    END
+ORDER BY 
+    Violation_Count DESC -- Sort results by count of violations
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
