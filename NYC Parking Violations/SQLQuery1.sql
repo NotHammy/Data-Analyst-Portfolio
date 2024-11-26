@@ -56,7 +56,6 @@ SELECT TOP 100 * FROM nyc;
 ------------------------------------------------------------------------ Exploratory Data Analysis -----------------------------------------------------------------------------------------------------------------------------|
 
 
-
 -- Which parking violation was most commonly committed by vehicles in NYC that were registered in various states?
 -- Include percentage distribution of violations.
 WITH TotalViolations AS (
@@ -135,8 +134,14 @@ GROUP BY
         WHEN DATEPART(WEEKDAY, Issue_Date) = 7 THEN 'Saturday'
     END
 ORDER BY 
-    Violation_Count DESC -- Sort results by count of violations
-
+    Violation_Count DESC; -- Sort results by count of violations
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+
+-- Which vehicle body types are most frequently involved in parking violations?
+SELECT Vehicle_Body_Type, COUNT(Vehicle_Body_Type) AS Count
+FROM nyc 
+GROUP BY Vehicle_Body_Type
+ORDER BY Count DESC
