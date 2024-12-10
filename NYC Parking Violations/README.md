@@ -42,6 +42,10 @@ After setting up the database and dashboard:
 3. Explore different views and filters to analyse the parking violation data.
 4. Use the insights to inform decision-making in urban planning and law enforcement strategies.
 
+## Ongoing Analysis
+
+Please note that the analysis presented in this dashboard is ongoing. Further analysis is required to deepen our understanding of underlying trends and to refine our insights. Additional data and advanced analytics will be employed to enhance the effectiveness of the conclusions drawn.
+
 ## Contributing
 
 Contributions are welcome. If you have ideas on how to improve the analysis or the dashboard, please fork the repository and submit a pull request.
