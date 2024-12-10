@@ -25,7 +25,6 @@ CREATE TABLE dbo.nyc (
     Issue_Date DATE,
     Summons_Number BIGINT,
     Plate_Type NVARCHAR(10),
-    Vehicle_Body_Type2 NVARCHAR(50),
     Vehicle_Make NVARCHAR(50),
     Vehicle_Color NVARCHAR(50),
     Street_Code1 INT,
@@ -38,7 +37,7 @@ DECLARE @sql NVARCHAR(MAX);
 
 WHILE @i <= 14  -- Adjust based on number of data tables (data files)
 BEGIN
-    SET @sql = 'INSERT INTO dbo.nyc (Registration_State, Violation_Description, Vehicle_Body_Type, Issue_Date, Summons_Number, Plate_Type, Vehicle_Body_Type2, Vehicle_Make, Vehicle_Color, Street_Code1, Vehicle_Year)
+    SET @sql = 'INSERT INTO dbo.nyc (Registration_State, Violation_Description, Vehicle_Body_Type, Issue_Date, Summons_Number, Plate_Type, Vehicle_Make, Vehicle_Color, Street_Code1, Vehicle_Year)
                 SELECT Registration_State, Violation_Description, Vehicle_Body_Type, Issue_Date, Summons_Number, Plate_Type, Vehicle_Body_Type2, Vehicle_Make, Vehicle_Color, Street_Code1, Vehicle_Year
                 FROM dbo.nyc_parking_violations_2022_part' + CAST(@i AS VARCHAR(2)) + ';';
 
@@ -141,7 +140,20 @@ ORDER BY
 
 
 -- Which vehicle body types are most frequently involved in parking violations?
-SELECT Vehicle_Body_Type, COUNT(Vehicle_Body_Type) AS Count
-FROM nyc 
-GROUP BY Vehicle_Body_Type
-ORDER BY Count DESC
+WITH TotalCount AS (
+    SELECT COUNT(*) AS Total
+    FROM nyc
+)
+SELECT TOP 10 Vehicle_Body_Type,
+       COUNT(Vehicle_Body_Type) AS Count,
+       ROUND(CAST(COUNT(Vehicle_Body_Type) AS FLOAT) / Total * 100, 2) AS Percentage
+FROM nyc
+CROSS JOIN TotalCount
+GROUP BY Vehicle_Body_Type, Total
+ORDER BY Count DESC;
+
+
+
+
+
+
