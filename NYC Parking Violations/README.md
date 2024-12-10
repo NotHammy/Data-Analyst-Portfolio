@@ -11,6 +11,7 @@ The purpose of this analysis is to leverage the NYC Parking Violations data to e
 ## Dataset
 
 The dataset includes records of parking violations for the fiscal year 2022, as provided by the NYC Open Data portal. Each record includes details such as the registration state, vehicle type, issue date, violation description, and more.
+
 Link - https://data.cityofnewyork.us/City-Government/Parking-Violations-Issued-Fiscal-Year-2022/7mxj-7a6y/about_data
 
 ## Tools Used
