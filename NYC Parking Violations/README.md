@@ -37,11 +37,11 @@ The SQL scripts in this repository include:
 ## Usage
 
 After setting up the database and dashboard:
-1. Open the dashboard using Power BI or Tableau.
-2. Explore different views and filters to analyse the parking violation data.
-3. Use the insights to inform decision-making in urban planning and law enforcement strategies.
+1. For quick viewing of the dashboard, access the provided PDF version.
+2. For a full interactive experience, download and open the dashboard using Power BI.
+3. Explore different views and filters to analyse the parking violation data.
+4. Use the insights to inform decision-making in urban planning and law enforcement strategies.
 
 ## Contributing
 
 Contributions are welcome. If you have ideas on how to improve the analysis or the dashboard, please fork the repository and submit a pull request.
-
